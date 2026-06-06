@@ -1,7 +1,7 @@
-package com.gabrielgon.service;
+package com.gabrielgon.agenda.service;
 
-import com.gabrielgon.domain.Contato;
-import com.gabrielgon.repository.ContatoRepository;
+import com.gabrielgon.agenda.domain.Contato;
+import com.gabrielgon.agenda.repository.ContatoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

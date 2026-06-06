@@ -1,4 +1,4 @@
-package com.gabrielgon.domain;
+package com.gabrielgon.agenda.domain;
 
 import jakarta.persistence.*;
 
