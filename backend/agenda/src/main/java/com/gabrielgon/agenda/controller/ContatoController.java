@@ -40,7 +40,13 @@ public class ContatoController {
         return service.saveContatos(contato);
     }
 
+
     @PutMapping("/{id}")
+    public Contato update(@PathVariable Long id, @RequestBody Contato contato) {
+        return service.update(id, contato);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
