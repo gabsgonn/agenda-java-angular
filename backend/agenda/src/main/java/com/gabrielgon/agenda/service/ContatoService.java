@@ -24,6 +24,10 @@ public class ContatoService {
         return repo.save(contato);
     }
 
+    public List<Contato> saveContatos(List<Contato> contatos) {
+        return repo.saveAll(contatos);
+    }
+
     public Optional<Contato> getById(Long id) {
         return repo.findById(id);
     }

@@ -35,6 +35,11 @@ public class ContatoController {
         return service.save(contato);
     }
 
+    @PostMapping("/batch")
+    public List<Contato> createContatos(@RequestBody List<Contato> contato) {
+        return service.saveContatos(contato);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
