@@ -1,0 +1,53 @@
+# BACKEND (Spring Boot / Maven / Java)
+**/target/
+**/build/
+**/.gradle/
+**/classes/
+**/bin/
+
+# IDEs e Sistema
+**/.idea/
+**/.vscode/
+**/*.iml
+**/*.iws
+**/*.ipr
+**/.project
+**/.classpath
+**/.settings/
+**/.metadata/
+**/.DS_Store
+**/Thumbs.db
+
+# Logs e arquivos temporários do Java
+**/logs/
+**/*.log
+**/*.tmp
+**/*.temp
+**/hs_err_pid*
+
+# Arquivos de propriedades locais (Segurança)
+**/application-local.properties
+**/application-dev.properties
+**/application-prod.properties
+**/.env
+**/.env.local
+
+# Maven Wrapper (Opcional - remova a linha abaixo se quiser versionar o wrapper)
+**/.mvn/wrapper/maven-wrapper.jar
+
+
+# FRONTEND (Angular / Node / JavaScript)
+**/node_modules/
+**/.angular/
+**/dist/
+**/tmp/
+
+# Logs do npm/yarn
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/.pnpm-debug.log*
+
+# Configurações locais de ambiente do Angular
+**/src/environments/environment.development.ts
+**/src/environments/environment.staging.ts
