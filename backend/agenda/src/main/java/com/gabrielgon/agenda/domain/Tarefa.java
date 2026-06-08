@@ -1,5 +1,6 @@
 package com.gabrielgon.agenda.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gabrielgon.agenda.domain.enums.Prioridade;
 import com.gabrielgon.agenda.domain.enums.StatusTarefa;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Tarefa {
 
 
@@ -28,7 +30,9 @@ public class Tarefa {
     private String titulo;
     private String descricao;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime horario;
 
     @Enumerated(EnumType.STRING)
@@ -37,7 +41,10 @@ public class Tarefa {
     @Enumerated(EnumType.STRING)
     private StatusTarefa status;
 
+    @org.hibernate.annotations.CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
     private LocalDateTime dataCriacao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
     private LocalDateTime dataConclusao;
 
     // tabela de relacionamento tarefa -> contatos
