@@ -1,7 +1,9 @@
 package com.gabrielgon.agenda.service;
 
+import com.gabrielgon.agenda.domain.Contato;
 import com.gabrielgon.agenda.domain.Tarefa;
 import com.gabrielgon.agenda.domain.enums.StatusTarefa;
+import com.gabrielgon.agenda.repository.ContatoRepository;
 import com.gabrielgon.agenda.repository.TarefaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -9,13 +11,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TarefaService  {
 
+    private ContatoRepository contatoRepo;
     private final TarefaRepository repo;
 
-    public TarefaService(TarefaRepository repo) {
+    public TarefaService(ContatoRepository contatoRepo, TarefaRepository repo) {
+        this.contatoRepo = contatoRepo;
         this.repo = repo;
     }
 
@@ -25,6 +31,15 @@ public class TarefaService  {
     }
 
     public Tarefa save(Tarefa tarefa) {
+        // carregar contatos
+
+        Set<Contato> contatosGerenciados = tarefa.getContatos().stream()
+                .map(contato -> contatoRepo.findById(contato.getId())
+                        .orElseThrow(() -> new RuntimeException("Contato não encontrado")))
+                .collect(Collectors.toSet());
+
+        tarefa.setContatos(contatosGerenciados);
+
         return repo.save(tarefa);
     }
 
