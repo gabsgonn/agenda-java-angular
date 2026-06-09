@@ -77,7 +77,7 @@ public class TarefaService  {
             tarefa.setPrioridade(updatedTarefa.getPrioridade());
             tarefa.setContatos(updatedTarefa.getContatos());
 
-            return tarefa;
+            return save(tarefa);
         }).orElseThrow(() -> new RuntimeException("Algum dos parâmetros estão incorretos"));
     }
 
@@ -105,7 +105,7 @@ public class TarefaService  {
             tarefa.setStatus(StatusTarefa.EM_ANDAMENTO); // ou PENDENTE, dependendo do seu fluxo
             tarefa.setDataConclusao(null); // Remove o carimbo de data/hora antigo
 
-            return tarefa;
+            return save(tarefa);
         }).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
     }
 
