@@ -1,12 +1,13 @@
 package com.gabrielgon.agenda.controller;
 
 import com.gabrielgon.agenda.domain.Tarefa;
+import com.gabrielgon.agenda.domain.enums.StatusTarefa;
 import com.gabrielgon.agenda.service.TarefaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -44,6 +45,22 @@ public class TarefaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/finish")
+    public Tarefa finishTask(@PathVariable Long id) {
+        return service.finishTarefa(id);
+    }
+
+    @PatchMapping("/{id}/reopen")
+    public Tarefa reopenTask(@PathVariable Long id) {
+        return service.reopenTarefa(id);
+    }
+
+    @PatchMapping("/{id}/status")
+    public Tarefa updateStatus(@PathVariable Long id,@RequestBody Map<String, String> body) {
+        StatusTarefa novoStatus = StatusTarefa.valueOf(body.get("status"));
+        return service.updateStatus(id, novoStatus);
     }
 
 }
