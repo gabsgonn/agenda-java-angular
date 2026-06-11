@@ -1,3 +1,5 @@
+import { PrioridadeTarefaEnum } from '../shared/enums/prioridade-tarefa.enum';
+import { StatusTarefaEnum } from '../shared/enums/status-tarefa.enum';
 import { Contato } from './contato.model';
 
 export interface Tarefa {
@@ -6,8 +8,8 @@ export interface Tarefa {
   descricao?: string;
   data?: string;
   horario?: string;
-  prioridade?: 'BAIXA' | 'MEDIA' | 'ALTA';
-  status?: 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA' | 'CANCELADA';
+  prioridade?: PrioridadeTarefaEnum;
+  status?: StatusTarefaEnum;
   dataCriacao?: string;
   dataConclusao?: string;
   contatos?: Contato[];
