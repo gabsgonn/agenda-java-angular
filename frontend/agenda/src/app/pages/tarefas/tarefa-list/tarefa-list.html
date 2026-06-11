@@ -1,21 +1,36 @@
-<div class="container-tarefas">
-  <h2>Minhas Tarefas</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="container-tarefas">
+    <h2>Minhas Tarefas</h2>
 
-  <!-- Sintaxe moderna do Angular (@for) -->
-  @for (tarefa of listaDeTarefas; track tarefa.id) {
-    <div class="card-tarefa">
-      <h3>{{ tarefa.titulo }}</h3>
-      <p>{{ tarefa.descricao }}</p>
+    <div formArrayName="tarefas">
+      @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
+        <div class="card-tarefa" [formGroupName]="i">
+          <h3>{{ control.value.titulo }}</h3>
+          <p>{{ control.value.descricao }}</p>
 
-      <div class="meta-dados">
-        <span>Prazo: {{ tarefa.data }} às {{ tarefa.horario }}</span
-        ><br />
-        <span>Prioridade: {{ tarefa.prioridade }}</span
-        ><br />
-        <span>Status: {{ tarefa.status }}</span>
-      </div>
+          <div class="meta-dados">
+            <span>Prazo: {{ control.value.data }} às {{ control.value.horario }}</span
+            ><br />
+            <span>Prioridade: {{ control.value.prioridade }}</span
+            ><br />
+
+            <label [for]="'status-' + i">Status: </label>
+            <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
+            <select [id]="'status-' + i" formControlName="status">
+              @for (opcao of opcoesStatus; track opcao.chave) {
+                <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
+                <option [ngValue]="opcao.valor">{{ opcao.valor }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhuma tarefa encontrada.</p>
+      }
     </div>
-  } @empty {
-    <p>Nenhuma tarefa encontrada.</p>
-  }
-</div>
+
+    <button type="submit" [disabled]="form.invalid" class="btn-salvar">
+      Salvar Todas as Alterações
+    </button>
+  </div>
+</form>
