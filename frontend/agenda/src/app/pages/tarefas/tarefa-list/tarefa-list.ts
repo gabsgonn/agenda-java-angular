@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Tarefa } from '../../../models/tarefa-model';
 import { TarefaService } from '../../../core/services/tarefa.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'scss-tarefa-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './tarefa-list.html',
   styleUrl: './tarefa-list.scss',
 })

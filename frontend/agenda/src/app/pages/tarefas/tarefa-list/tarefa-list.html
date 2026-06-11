@@ -1,1 +1,21 @@
-<p>tarefa-list works!</p>
+<div class="container-tarefas">
+  <h2>Minhas Tarefas</h2>
+
+  <!-- Sintaxe moderna do Angular (@for) -->
+  @for (tarefa of listaDeTarefas; track tarefa.id) {
+    <div class="card-tarefa">
+      <h3>{{ tarefa.titulo }}</h3>
+      <p>{{ tarefa.descricao }}</p>
+
+      <div class="meta-dados">
+        <span>Prazo: {{ tarefa.data }} às {{ tarefa.horario }}</span
+        ><br />
+        <span>Prioridade: {{ tarefa.prioridade }}</span
+        ><br />
+        <span>Status: {{ tarefa.status }}</span>
+      </div>
+    </div>
+  } @empty {
+    <p>Nenhuma tarefa encontrada.</p>
+  }
+</div>
