@@ -16,24 +16,24 @@
 
             <label [for]="'status-' + i">Status: </label>
             <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
-            <select [id]="'status-' + i" formControlName="status">
+            <select [id]="'status-' + i" formControlName="status" (click)="updateStatusDaTarefa(i)">
               @for (opcao of opcoesStatus; track opcao.chave) {
                 <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
-                <option (click)="updateStatusDaTarefa(i)" [ngValue]="opcao.valor">
+                <option [ngValue]="opcao.valor">
                   {{ opcao.valor }}
                 </option>
               }
             </select>
           </div>
 
-          <button
+          <!-- <button
             type="button"
             class="btn-salvar-individual"
             [disabled]="control.invalid"
             (click)="updateStatusDaTarefa(i)"
           >
             Salvar Status
-          </button>
+          </button> -->
         </div>
       } @empty {
         <p>Nenhuma tarefa encontrada.</p>

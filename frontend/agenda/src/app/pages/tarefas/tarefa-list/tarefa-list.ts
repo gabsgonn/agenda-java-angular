@@ -78,19 +78,17 @@ export class TarefaList implements OnInit {
     });
   }
 
-  // get statusFormArray(): FormArray {
-  //   return this.form.get('tarefas') as FormArray;
-  // }
-
-  // Método disparado pelo clique do botão Submit
-  updateStatusDaTarefa(index: number): void {
+  // === Patch status ===
+  updateStatusDaTarefa(index: number) {
     const agrupar = this.tarefasFormArray.at(index);
     const id = agrupar.get('id')?.value;
     const status = agrupar.get('status')?.value;
 
     this.tarefaService.updateStatus(id, status).subscribe({
       next: () => alert('Status da tarefa atualizado com sucesso!'),
-      error: (err) => console.error(err),
+      error: (err) => {
+        (console.log(err), alert('Não foi possível atualizar o status.'));
+      },
     });
   }
 }
