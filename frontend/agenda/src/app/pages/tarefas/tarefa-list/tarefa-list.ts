@@ -2,8 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Tarefa } from '../../../models/tarefa-model';
 import { TarefaService } from '../../../core/services/tarefa.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  ReactiveFormsModule,
+  Validators,
+  Form,
+} from '@angular/forms';
 import { StatusTarefaEnum } from '../../../shared/enums/status-tarefa.enum';
+import { error } from 'node:console';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'scss-tarefa-list',
@@ -65,28 +74,23 @@ export class TarefaList implements OnInit {
       data: [tarefa.data],
       horario: [tarefa.horario],
       prioridade: [tarefa.prioridade],
-      status: [tarefa.status, Validators.required], // O select escutará este controle
+      status: [tarefa.status],
     });
   }
 
+  // get statusFormArray(): FormArray {
+  //   return this.form.get('tarefas') as FormArray;
+  // }
+
   // Método disparado pelo clique do botão Submit
-  onSubmit(): void {
-    if (this.form.invalid) {
-      return;
-    }
+  updateStatusDaTarefa(index: number): void {
+    const agrupar = this.tarefasFormArray.at(index);
+    const id = agrupar.get('id')?.value;
+    const status = agrupar.get('status')?.value;
 
-    // O valor do formulário será um array com todas as tarefas modificadas
-    const listaTarefasAtualizadas: Tarefa[] = this.form.value.tarefas;
-
-    console.log('Dados prontos para salvar em lote:', listaTarefasAtualizadas);
-
-    // Exemplo de envio para o seu service (caso tenha um endpoint de atualização em lote)
-    // Se a sua API só atualizar de 1 em 1, você pode fazer um loop ou usar forkJoin do RxJS
-    /*
-    this.tarefaService.updateAll(listaTarefasAtualizadas).subscribe({
-      next: () => alert('Todas as tarefas foram salvas com sucesso!'),
-      error: (err) => console.error(err)
+    this.tarefaService.updateStatus(id, status).subscribe({
+      next: () => alert('Status da tarefa atualizado com sucesso!'),
+      error: (err) => console.error(err),
     });
-    */
   }
 }

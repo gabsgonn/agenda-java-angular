@@ -15,4 +15,9 @@ export class TarefaService {
   getAll(): Observable<Tarefa[]> {
     return this.http.get<Tarefa[]>(this.apiUrl);
   }
+
+  updateStatus(id: number, status: string): Observable<Tarefa> {
+    const statusNovo = { status };
+    return this.http.patch<Tarefa>(`${this.apiUrl}/${id}/status`, statusNovo);
+  }
 }

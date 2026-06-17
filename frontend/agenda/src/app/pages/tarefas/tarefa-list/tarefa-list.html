@@ -1,7 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
   <div class="container-tarefas">
     <h2>Minhas Tarefas</h2>
-
+    <!-- (ngSubmit)="updateStatus()" -->
     <div formArrayName="tarefas">
       @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
         <div class="card-tarefa" [formGroupName]="i">
@@ -19,18 +19,25 @@
             <select [id]="'status-' + i" formControlName="status">
               @for (opcao of opcoesStatus; track opcao.chave) {
                 <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
-                <option [ngValue]="opcao.valor">{{ opcao.valor }}</option>
+                <option (click)="updateStatusDaTarefa(i)" [ngValue]="opcao.valor">
+                  {{ opcao.valor }}
+                </option>
               }
             </select>
           </div>
+
+          <button
+            type="button"
+            class="btn-salvar-individual"
+            [disabled]="control.invalid"
+            (click)="updateStatusDaTarefa(i)"
+          >
+            Salvar Status
+          </button>
         </div>
       } @empty {
         <p>Nenhuma tarefa encontrada.</p>
       }
     </div>
-
-    <button type="submit" [disabled]="form.invalid" class="btn-salvar">
-      Salvar Todas as Alterações
-    </button>
   </div>
 </form>
