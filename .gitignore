@@ -50,3 +50,6 @@
 # Configurações locais de ambiente do Angular
 **/src/environments/environment.development.ts
 **/src/environments/environment.staging.ts
+
+# Configuração Debug automatizado
+**/debug.sh
