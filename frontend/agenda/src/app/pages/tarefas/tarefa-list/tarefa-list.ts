@@ -49,7 +49,7 @@ export class TarefaList implements OnInit {
   }
 
   carregarTarefas(): void {
-    this.tarefaService.getAll().subscribe({
+    this.tarefaService.obterTarefas().subscribe({
       next: (dados: Tarefa[]) => {
         // 2. Limpa o array caso já existam dados
         this.tarefasFormArray.clear();

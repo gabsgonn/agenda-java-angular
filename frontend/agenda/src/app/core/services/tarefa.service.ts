@@ -12,7 +12,7 @@ export class TarefaService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Tarefa[]> {
+  obterTarefas(): Observable<Tarefa[]> {
     return this.http.get<Tarefa[]>(this.apiUrl);
   }
 
