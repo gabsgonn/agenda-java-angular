@@ -15,4 +15,21 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  button {
+    margin-top: 10px;
+  }
+}
+
+// Set Timepicker to the right
+::ng-deep .mat-timepicker-panel {
+  --mat-option-selected-state-label-text-color: black;
+  max-width: 10rem !important;
+  position: absolute !important;
+  right: 0 !important;
+}
+
+// Ensure the overlay pane containing the timepicker is positioned relative to the parent
+::ng-deep .cdk-overlay-pane:has(.mat-timepicker-panel) {
+  position: relative !important;
 }

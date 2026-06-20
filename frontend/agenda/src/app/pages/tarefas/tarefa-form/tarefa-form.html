@@ -1,10 +1,12 @@
 <form [formGroup]="form" class="form-container">
   <div class="container-cadastrar-tarefa">
     <h2>Cadastrar Tarefa</h2>
+
     <mat-form-field appearance="outline">
       <mat-label>Título</mat-label>
       <input matInput formControlName="titulo" placeholder="Título" />
     </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Descrição</mat-label>
       <textarea
@@ -17,13 +19,77 @@
       ></textarea>
       <mat-hint align="end">{{ value().length }}/300</mat-hint>
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
       <mat-label>Choose a date</mat-label>
-      <input matInput formControlName="data" [matDatepicker]="picker" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker [dateClass]="dataClass" #picker></mat-datepicker>
+      <input matInput formControlName="data" [matDatepicker]="datePicker" />
+      <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker [dateClass]="dataClass" #datePicker></mat-datepicker>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Pick a time</mat-label>
+      <input matInput formControlName="horario" [matTimepicker]="timePicker" />
+      <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
+      <mat-timepicker #timePicker></mat-timepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Prioridade</mat-label>
+      <mat-select formControlName="prioridade">
+        @for (opcao of opcoesPrioridade; track opcao.chave) {
+          <mat-option [value]="opcao.valor">
+            {{ opcao.valor }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        @for (opcao of opcoesStatus; track opcao.chave) {
+          <mat-option [value]="opcao.valor">
+            {{ opcao.valor }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>Shiba Inu</mat-card-title>
+          <mat-card-subtitle>Small</mat-card-subtitle>
+          <img
+            mat-card-sm-image
+            src="https://yt3.ggpht.com/yti/ANjgQV_Zbez94Jshs2uiFoIHUdjTkHb4yK6UXKJh577gcjzW-sEc=s88-c-k-c0x00ffffff-no-rj"
+          />
+        </mat-card-title-group>
+      </mat-card-header>
+    </mat-card> -->
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>Contatos</mat-card-title>
+
+          @for (control of contatosArray.controls; track control.value.id; let i = $index) {
+            <mat-card [formGroupName]="i">
+              <mat-card-header>
+                <mat-card-title-group>
+                  <mat-card-title>{{ control.value.nome }}</mat-card-title>
+                  <mat-card-subtitle>{{ control.value.telefone }}</mat-card-subtitle>
+                </mat-card-title-group>
+              </mat-card-header>
+            </mat-card>
+          } @empty {
+            <p>Nenhum contato encontrado.</p>
+          }
+        </mat-card-title-group>
+      </mat-card-header>
+    </mat-card>
+
     <!-- salvar e cancelar -->
     <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
     <button mat-raised-button color="primary" (click)="onCancel()">Cancelar</button>
