@@ -3,30 +3,35 @@
     <h2>Minhas Tarefas</h2>
     <!-- (ngSubmit)="updateStatus()" -->
     <div formArrayName="tarefas">
-      @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
-        <div class="card-tarefa" [formGroupName]="i">
-          <h3>{{ control.value.titulo }}</h3>
-          <p>{{ control.value.descricao }}</p>
+      @if (tarefas$ | async) {
+        @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
+          <div class="card-tarefa" [formGroupName]="i">
+            <h3>{{ control.value.titulo }}</h3>
+            <p>{{ control.value.descricao }}</p>
 
-          <div class="meta-dados">
-            <span>Prazo: {{ control.value.data }} às {{ control.value.horario }}</span
-            ><br />
-            <span>Prioridade: {{ control.value.prioridade }}</span
-            ><br />
+            <div class="meta-dados">
+              <span>Prazo: {{ control.value.data }} às {{ control.value.horario }}</span
+              ><br />
+              <span>Prioridade: {{ control.value.prioridade }}</span
+              ><br />
 
-            <label [for]="'status-' + i">Status: </label>
-            <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
-            <select [id]="'status-' + i" formControlName="status" (click)="updateStatusDaTarefa(i)">
-              @for (opcao of opcoesStatus; track opcao.chave) {
-                <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
-                <option [ngValue]="opcao.valor">
-                  {{ opcao.valor }}
-                </option>
-              }
-            </select>
-          </div>
+              <label [for]="'status-' + i">Status: </label>
+              <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
+              <select
+                [id]="'status-' + i"
+                formControlName="status"
+                (click)="updateStatusDaTarefa(i)"
+              >
+                @for (opcao of opcoesStatus; track opcao.chave) {
+                  <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
+                  <option [ngValue]="opcao.valor">
+                    {{ opcao.valor }}
+                  </option>
+                }
+              </select>
+            </div>
 
-          <!-- <button
+            <!-- <button
             type="button"
             class="btn-salvar-individual"
             [disabled]="control.invalid"
@@ -34,9 +39,12 @@
           >
             Salvar Status
           </button> -->
-        </div>
-      } @empty {
-        <p>Nenhuma tarefa encontrada.</p>
+          </div>
+        } @empty {
+          <p>Nenhuma tarefa encontrada.</p>
+        }
+      } @else {
+        <p>Carregando...</p>
       }
     </div>
   </div>
