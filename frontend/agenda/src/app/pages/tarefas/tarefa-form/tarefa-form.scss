@@ -33,3 +33,68 @@
 ::ng-deep .cdk-overlay-pane:has(.mat-timepicker-panel) {
   position: relative !important;
 }
+
+.card-principal {
+  margin: 16px 0;
+
+  .lista-contatos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaçamento entre os contatos */
+    margin-top: 12px;
+  }
+
+  .item-contato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f9f9f9;
+      border-color: #b0b0b0;
+    }
+
+    &.selecionado {
+      background-color: #e8f0fe; /* Azul bem claro */
+      border-color: #1a73e8; /* Borda azul indicando seleção */
+
+      .nome {
+        color: #1a73e8;
+        font-weight: 500;
+      }
+    }
+
+    .info-contato {
+      display: flex;
+      flex-direction: column;
+
+      .nome {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .telefone {
+        font-size: 12px;
+        color: #666;
+        margin-top: 2px;
+      }
+    }
+
+    .check-icon {
+      color: #1a73e8;
+      font-weight: bold;
+    }
+  }
+
+  .mensagem-vazio,
+  .mensagem-carregando {
+    color: #757575;
+    font-size: 14px;
+    padding: 8px 0;
+  }
+}

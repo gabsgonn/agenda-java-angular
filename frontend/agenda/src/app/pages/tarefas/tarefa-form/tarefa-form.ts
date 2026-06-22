@@ -48,7 +48,22 @@ import { Contato } from '../../../models/contato.model';
 })
 export class TarefaForm implements OnInit {
   form!: FormGroup;
-  contatos$: Observable<Contato[]>;
+  contatos$!: Observable<Contato[]>;
+
+  contatosSelecionados: Contato[] = [];
+
+  selecionarContato(contato: Contato): void {
+    const index = this.contatosSelecionados.findIndex((c) => c.id === contato.id);
+
+    if (index >= 0) {
+      this.contatosSelecionados.splice(index, 1);
+    } else {
+      this.contatosSelecionados.push(contato);
+    }
+
+    const idsSelecionados = this.contatosSelecionados.map((c) => c.id);
+    this.form.get('contatos')?.setValue(idsSelecionados);
+  }
 
   opcoesStatus = Object.entries(StatusTarefaEnum).map(([chave, valor]) => {
     const valorFormatado = valor
@@ -90,22 +105,10 @@ export class TarefaForm implements OnInit {
       status: [StatusTarefaEnum.Pendente],
       dataCriacao: [new Date()],
       dataConclusao: [null],
-      contatos: this.fb.array([]),
+      contatos: [[]],
     });
-
-    this.contatos$ = this.contatoService.obterContatos().pipe(
-      tap((dados) => {
-        this.contatosArray.clear();
-        dados.forEach((contato) => {
-          this.contatosArray.push(this.criarGrupoContato(contato));
-        });
-      }),
-    );
   }
 
-  get contatosArray(): FormArray {
-    return this.form.get('contatos') as FormArray;
-  }
   get tarefasFormArray(): FormArray {
     return this.form.get('tarefas') as FormArray;
   }
@@ -117,14 +120,6 @@ export class TarefaForm implements OnInit {
     }
     return '';
   };
-
-  private criarGrupoContato(contato: Contato): FormGroup {
-    return this.fb.group({
-      id: [contato.id],
-      name: [contato.name],
-      telefone: [contato.telefone],
-    });
-  }
 
   private criarGrupoTarefa(tarefa: Tarefa): FormGroup {
     return this.fb.group({
@@ -146,6 +141,9 @@ export class TarefaForm implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       // this.salvarTarefa();
+      this.contatos$ = this.contatoService.obterContatos();
+    } else {
+      this.contatos$ = new Observable<Contato[]>((sub) => sub.next([]));
     }
   }
 

@@ -68,26 +68,37 @@
         </mat-card-title-group>
       </mat-card-header>
     </mat-card> -->
-
-    <mat-card>
+    <mat-card class="card-principal">
       <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>Contatos</mat-card-title>
-
-          @for (control of contatosArray.controls; track control.value.id; let i = $index) {
-            <mat-card [formGroupName]="i">
-              <mat-card-header>
-                <mat-card-title-group>
-                  <mat-card-title>{{ control.value.nome }}</mat-card-title>
-                  <mat-card-subtitle>{{ control.value.telefone }}</mat-card-subtitle>
-                </mat-card-title-group>
-              </mat-card-header>
-            </mat-card>
-          } @empty {
-            <p>Nenhum contato encontrado.</p>
-          }
-        </mat-card-title-group>
+        <mat-card-title>Contatos</mat-card-title>
       </mat-card-header>
+
+      <mat-card-content class="lista-contatos">
+        @if (contatos$ | async; as contatos) {
+          @for (contato of contatos; track contato.id) {
+            <!-- Adicionado o evento de clique e a classe dinâmica para seleção -->
+            <div
+              class="item-contato"
+              [class.selecionado]="contatosSelecionados.some((c) => c.id === contato.id)"
+              (click)="selecionarContato(contato)"
+            >
+              <div class="info-contato">
+                <span class="nome">{{ contato.nome }}</span>
+                <span class="telefone">{{ contato.telefone }}</span>
+              </div>
+
+              <!-- Um feedback visual opcional para indicar que está selecionado -->
+              @if (contatosSelecionados.some((c) => c.id === contato.id)) {
+                <span class="check-icon">✓</span>
+              }
+            </div>
+          } @empty {
+            <p class="mensagem-vazio">Nenhum contato encontrado.</p>
+          }
+        } @else {
+          <p class="mensagem-carregando">Carregando contatos...</p>
+        }
+      </mat-card-content>
     </mat-card>
 
     <!-- salvar e cancelar -->
