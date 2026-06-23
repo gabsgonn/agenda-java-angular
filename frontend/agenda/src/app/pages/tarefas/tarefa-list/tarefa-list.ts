@@ -64,7 +64,7 @@ export class TarefaList implements OnInit {
   updateStatusDaTarefa(index: number) {
     const grupo = this.tarefasFormArray.at(index);
     const { id, status } = grupo.value;
-    this.tarefaService.updateStatus(id, status).subscribe({
+    this.tarefaService.atualizarStatus(id, status).subscribe({
       next: () => alert('Status da tarefa atualizado com sucesso!'),
       error: (err) => {
         console.error(err);

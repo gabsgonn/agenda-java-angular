@@ -38,7 +38,7 @@
       <mat-label>Prioridade</mat-label>
       <mat-select formControlName="prioridade">
         @for (opcao of opcoesPrioridade; track opcao.chave) {
-          <mat-option [value]="opcao.valor">
+          <mat-option [value]="opcao.chave">
             {{ opcao.valor }}
           </mat-option>
         }
@@ -49,25 +49,13 @@
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
         @for (opcao of opcoesStatus; track opcao.chave) {
-          <mat-option [value]="opcao.valor">
+          <mat-option [value]="opcao.chave">
             {{ opcao.valor }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <!-- <mat-card class="example-card" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>Shiba Inu</mat-card-title>
-          <mat-card-subtitle>Small</mat-card-subtitle>
-          <img
-            mat-card-sm-image
-            src="https://yt3.ggpht.com/yti/ANjgQV_Zbez94Jshs2uiFoIHUdjTkHb4yK6UXKJh577gcjzW-sEc=s88-c-k-c0x00ffffff-no-rj"
-          />
-        </mat-card-title-group>
-      </mat-card-header>
-    </mat-card> -->
     <mat-card class="card-principal">
       <mat-card-header>
         <mat-card-title>Contatos</mat-card-title>
@@ -76,7 +64,6 @@
       <mat-card-content class="lista-contatos">
         @if (contatos$ | async; as contatos) {
           @for (contato of contatos; track contato.id) {
-            <!-- Adicionado o evento de clique e a classe dinâmica para seleção -->
             <div
               class="item-contato"
               [class.selecionado]="contatosSelecionados.some((c) => c.id === contato.id)"
@@ -102,7 +89,7 @@
     </mat-card>
 
     <!-- salvar e cancelar -->
-    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button color="primary" (click)="salvarTarefa()">Salvar</button>
     <button mat-raised-button color="primary" (click)="onCancel()">Cancelar</button>
   </div>
 </form>

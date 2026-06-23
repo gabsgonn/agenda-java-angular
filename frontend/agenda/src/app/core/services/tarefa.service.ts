@@ -12,15 +12,19 @@ export class TarefaService {
 
   constructor(private http: HttpClient) {}
 
-  cadastrarTarefa(tarefa: Tarefa): Observable<Tarefa> {
-    return this.http.post<Tarefa>(this.apiUrl, tarefa);
-  }
-
   obterTarefas(): Observable<Tarefa[]> {
     return this.http.get<Tarefa[]>(this.apiUrl);
   }
 
-  updateStatus(id: number, status: string): Observable<Tarefa> {
+  cadastrarTarefa(tarefa: Tarefa): Observable<Tarefa> {
+    return this.http.post<Tarefa>(this.apiUrl, tarefa);
+  }
+
+  deletarTarefa(id: number): Observable<Tarefa> {
+    return this.http.delete<Tarefa>(`${this.apiUrl}/${id}`);
+  }
+
+  atualizarStatus(id: number, status: string): Observable<Tarefa> {
     const statusNovo = { status };
     return this.http.patch<Tarefa>(`${this.apiUrl}/${id}/status`, statusNovo);
   }
