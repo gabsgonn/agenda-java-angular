@@ -1,7 +1,6 @@
 <form [formGroup]="form">
   <div class="container-tarefas">
     <h2>Minhas Tarefas</h2>
-    <!-- (ngSubmit)="updateStatus()" -->
     <div formArrayName="tarefas">
       @if (tarefas$ | async) {
         @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
@@ -16,14 +15,12 @@
               ><br />
 
               <label [for]="'status-' + i">Status: </label>
-              <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
               <select
                 [id]="'status-' + i"
                 formControlName="status"
-                (click)="updateStatusDaTarefa(i)"
+                (change)="updateStatusDaTarefa(i)"
               >
                 @for (opcao of opcoesStatus; track opcao.chave) {
-                  <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
                   <option [ngValue]="opcao.valor">
                     {{ opcao.valor }}
                   </option>
@@ -31,14 +28,9 @@
               </select>
             </div>
 
-            <!-- <button
-            type="button"
-            class="btn-salvar-individual"
-            [disabled]="control.invalid"
-            (click)="updateStatusDaTarefa(i)"
-          >
-            Salvar Status
-          </button> -->
+            <button type="button" class="btn-deletar-tarefa" (click)="deletarTarefa(i)">
+              Deletar Tarefa
+            </button>
           </div>
         } @empty {
           <p>Nenhuma tarefa encontrada.</p>

@@ -28,22 +28,6 @@ export class TarefaList implements OnInit {
     private fb: FormBuilder,
   ) {}
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      tarefas: this.fb.array([]),
-    });
-
-    this.tarefas$ = this.tarefaService.obterTarefas().pipe(
-      tap((dados) => {
-        this.tarefasFormArray.clear();
-
-        dados.forEach((tarefa) => {
-          this.tarefasFormArray.push(this.criarGrupoTarefa(tarefa));
-        });
-      }),
-    );
-  }
-
   get tarefasFormArray(): FormArray {
     return this.form.get('tarefas') as FormArray;
   }
@@ -57,6 +41,42 @@ export class TarefaList implements OnInit {
       horario: [tarefa.horario],
       prioridade: [tarefa.prioridade],
       status: [tarefa.status],
+    });
+  }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      tarefas: this.fb.array([]),
+    });
+
+    this.carregarTarefas();
+  }
+
+  private carregarTarefas(): void {
+    this.tarefas$ = this.tarefaService.obterTarefas().pipe(
+      tap((dados) => {
+        this.tarefasFormArray.clear();
+
+        dados.forEach((tarefa) => {
+          this.tarefasFormArray.push(this.criarGrupoTarefa(tarefa));
+        });
+      }),
+    );
+  }
+
+  deletarTarefa(index: number) {
+    const grupo = this.tarefasFormArray.at(index);
+    const { id } = grupo.value;
+    this.tarefaService.deletarTarefa(id).subscribe({
+      next: () => {
+        alert('Tarefa deletada com sucesso. :)');
+        this.tarefasFormArray.removeAt(index);
+        this.carregarTarefas();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Não foi possível deletar a tarefa. :(');
+      },
     });
   }
 
