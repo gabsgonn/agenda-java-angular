@@ -24,7 +24,7 @@ import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/mate
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
-import { map, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Contato } from '../../../models/contato.model';
 
 @Component({
@@ -72,7 +72,7 @@ export class TarefaForm implements OnInit {
       .replace(/\b\w/g, (letra) => letra.toUpperCase());
 
     return {
-      chave: valor,
+      chave,
       valor: valorFormatado,
     };
   });
@@ -84,7 +84,7 @@ export class TarefaForm implements OnInit {
       .replace(/\b\w/g, (letra) => letra.toUpperCase());
 
     return {
-      chave: valor,
+      chave,
       valor: valorFormatado,
     };
   });
@@ -103,6 +103,8 @@ export class TarefaForm implements OnInit {
       horario: [new Date(), Validators.required],
       prioridade: [PrioridadeTarefaEnum.Baixa],
       status: [StatusTarefaEnum.Pendente],
+      dataCriacao: [new Date()],
+      dataConclusao: [null],
       contatos: [[]],
     });
   }
@@ -114,7 +116,7 @@ export class TarefaForm implements OnInit {
   dataClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
       const date = cellDate.getDate();
-      return date === 1 || date === 20 ? 'dataSimples' : '';
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
     }
     return '';
   };
@@ -158,20 +160,12 @@ export class TarefaForm implements OnInit {
       const dadosFormatados = { ...this.form.value };
       if (dadosFormatados.data) {
         dadosFormatados.data = formatDate(dadosFormatados.data, 'yyyy-MM-dd', 'en-US');
-        dadosFormatados.horario = formatDate(dadosFormatados.horario, 'HH:mm', 'en-US');
-
-        dadosFormatados.contatos = (dadosFormatados.contatos || []).map(
-          (id: string) =>
-            ({
-              id: Number(id),
-            }) as any,
-        );
-
-        this.tarefasService.cadastrarTarefa(dadosFormatados).subscribe({
-          next: () => alert('Tarefa salva com sucesso!'),
-          error: (err) => console.log('Erro ao salvar', err),
-        });
       }
+
+      this.tarefasService.cadastrarTarefa(this.form.value).subscribe({
+        next: () => alert('Tarefa salva com sucesso!'),
+        error: (err) => console.log('Erro ao salvar', err),
+      });
     }
   }
 }
