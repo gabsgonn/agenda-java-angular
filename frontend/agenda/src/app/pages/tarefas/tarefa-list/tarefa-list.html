@@ -2,8 +2,8 @@
   <div class="container-tarefas">
     <h2>Minhas Tarefas</h2>
     <div formArrayName="tarefas">
-      @if (tarefas$ | async) {
-        @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
+      @if (!carregando) {
+        @for (control of tarefasFormArray.controls; track $index; let i = $index) {
           <div class="card-tarefa" [formGroupName]="i">
             <h3>{{ control.value.titulo }}</h3>
             <p>{{ control.value.descricao }}</p>

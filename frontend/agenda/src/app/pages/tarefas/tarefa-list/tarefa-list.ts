@@ -16,7 +16,7 @@ import { StatusTarefaEnum } from '../../../shared/enums/status-tarefa.enum';
 })
 export class TarefaList implements OnInit {
   form!: FormGroup;
-  tarefas$!: Observable<Tarefa[]>;
+  carregando = true;
 
   opcoesStatus = Object.entries(StatusTarefaEnum).map(([chave, valor]) => ({
     chave,
@@ -28,8 +28,36 @@ export class TarefaList implements OnInit {
     private fb: FormBuilder,
   ) {}
 
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      tarefas: this.fb.array([]),
+    });
+
+    this.carregarTarefas();
+  }
+
   get tarefasFormArray(): FormArray {
     return this.form.get('tarefas') as FormArray;
+  }
+
+  carregarTarefas(): void {
+    this.carregando = true;
+    this.tarefaService.obterTarefas().subscribe({
+      next: (dados) => {
+        // this.tarefasFormArray.clear();
+        // dados.forEach((tarefa) => {
+        //   this.tarefasFormArray.push(this.criarGrupoTarefa(tarefa));
+        // });
+
+        const novosGrupos = dados.map((tarefa) => this.criarGrupoTarefa(tarefa));
+        this.form.setControl('tarefas', this.fb.array(novosGrupos));
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.carregando = false;
+      },
+    });
   }
 
   private criarGrupoTarefa(tarefa: Tarefa): FormGroup {
@@ -44,29 +72,10 @@ export class TarefaList implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      tarefas: this.fb.array([]),
-    });
-
-    this.carregarTarefas();
-  }
-
-  private carregarTarefas(): void {
-    this.tarefas$ = this.tarefaService.obterTarefas().pipe(
-      tap((dados) => {
-        this.tarefasFormArray.clear();
-
-        dados.forEach((tarefa) => {
-          this.tarefasFormArray.push(this.criarGrupoTarefa(tarefa));
-        });
-      }),
-    );
-  }
-
   deletarTarefa(index: number) {
     const grupo = this.tarefasFormArray.at(index);
     const { id } = grupo.value;
+
     this.tarefaService.deletarTarefa(id).subscribe({
       next: () => {
         alert('Tarefa deletada com sucesso. :)');
@@ -80,12 +89,15 @@ export class TarefaList implements OnInit {
     });
   }
 
-  // === Patch status ===
   updateStatusDaTarefa(index: number) {
     const grupo = this.tarefasFormArray.at(index);
     const { id, status } = grupo.value;
+
     this.tarefaService.atualizarStatus(id, status).subscribe({
-      next: () => alert('Status da tarefa atualizado com sucesso!'),
+      next: () => {
+        alert('Status da tarefa atualizado com sucesso!');
+        // this.carregarTarefas();
+      },
       error: (err) => {
         console.error(err);
         alert('Não foi possível atualizar o status.');
