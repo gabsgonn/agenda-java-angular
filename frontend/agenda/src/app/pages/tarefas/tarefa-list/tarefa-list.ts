@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
 
 import { Tarefa } from '../../../models/tarefa-model';
 import { TarefaService } from '../../../core/services/tarefa.service';
 import { StatusTarefaEnum } from '../../../shared/enums/status-tarefa.enum';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'scss-tarefa-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './tarefa-list.html',
   styleUrl: './tarefa-list.scss',
 })
@@ -24,8 +24,9 @@ export class TarefaList implements OnInit {
   }));
 
   constructor(
-    private tarefaService: TarefaService,
     private fb: FormBuilder,
+    private tarefaService: TarefaService,
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +45,6 @@ export class TarefaList implements OnInit {
     this.carregando = true;
     this.tarefaService.obterTarefas().subscribe({
       next: (dados) => {
-        // this.tarefasFormArray.clear();
-        // dados.forEach((tarefa) => {
-        //   this.tarefasFormArray.push(this.criarGrupoTarefa(tarefa));
-        // });
-
         const novosGrupos = dados.map((tarefa) => this.criarGrupoTarefa(tarefa));
         this.form.setControl('tarefas', this.fb.array(novosGrupos));
         this.carregando = false;
@@ -78,8 +74,8 @@ export class TarefaList implements OnInit {
 
     this.tarefaService.deletarTarefa(id).subscribe({
       next: () => {
-        alert('Tarefa deletada com sucesso. :)');
         this.tarefasFormArray.removeAt(index);
+        this.snackbarService.mostrarMensagem('Tarefa deletada!');
         this.carregarTarefas();
       },
       error: (err) => {
@@ -96,7 +92,6 @@ export class TarefaList implements OnInit {
     this.tarefaService.atualizarStatus(id, status).subscribe({
       next: () => {
         alert('Status da tarefa atualizado com sucesso!');
-        // this.carregarTarefas();
       },
       error: (err) => {
         console.error(err);
