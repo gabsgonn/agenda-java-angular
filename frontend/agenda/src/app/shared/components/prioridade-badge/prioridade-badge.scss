@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+.prioridade-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.125rem 0.75rem;
+  border-radius: $border-radius-xs;
+  font-size: 12px;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+}
+/* PRIORIDADES */
+.prioridade-badge.alta {
+  background: $prioridade-alta;
+  color: $on-prioridade-alta;
+  border: $border-prioridade-alta 1px solid;
+}
+.prioridade-badge.media {
+  background: $prioridade-media;
+  color: $on-prioridade-media;
+  border: $border-prioridade-media 1px solid;
+}
+.prioridade-badge.baixa {
+  background: $prioridade-baixa;
+  color: $on-prioridade-baixa;
+  border: $border-prioridade-baixa 1px solid;
+}
