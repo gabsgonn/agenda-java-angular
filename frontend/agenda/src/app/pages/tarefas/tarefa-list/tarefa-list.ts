@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,28 +6,29 @@ import { Tarefa } from '../../../models/tarefa-model';
 import { TarefaService } from '../../../core/services/tarefa.service';
 import { StatusTarefaEnum } from '../../../shared/enums/status-tarefa.enum';
 import { SnackbarService } from '../../../core/services/snackbar.service';
+import { PrioridadeTarefaEnum } from '../../../shared/enums/prioridade-tarefa.enum';
+import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
+import { PrioridadeBadge } from '../../../shared/components/prioridade-badge/prioridade-badge';
 
 @Component({
   selector: 'scss-tarefa-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage],
+  imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage, StatusBadge, PrioridadeBadge],
   templateUrl: './tarefa-list.html',
   styleUrl: './tarefa-list.scss',
 })
 export class TarefaList implements OnInit {
+  private readonly fb = inject(FormBuilder);
+  private readonly tarefaService = inject(TarefaService);
+  private readonly snackbarService = inject(SnackbarService);
+
+  readonly statusEnum = StatusTarefaEnum;
+  readonly prioridadeEnum = PrioridadeTarefaEnum;
+
   form!: FormGroup;
   carregando = true;
 
-  opcoesStatus = Object.entries(StatusTarefaEnum).map(([chave, valor]) => ({
-    chave,
-    valor,
-  }));
-
-  constructor(
-    private fb: FormBuilder,
-    private tarefaService: TarefaService,
-    private snackbarService: SnackbarService,
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
