@@ -35,18 +35,26 @@ $surface-container: #f3edf7;
 $surface-container-high: #ece6f0;
 $surface-container-highest: #e6e0e9;
 
-// --- Status Colors ---
-$status-pending: #fef1d8; // Tertiary Container variant
-$on-status-pending: #31111d;
-$status-in-progress: #e8def8; // Secondary Container
-$on-status-in-progress: #1d192b;
-$status-completed: #eaddff; // Primary Container
-$on-status-completed: #21005d;
-$status-cancelled: #f4f3f4; // Surface Dim
-$on-status-cancelled: #79747e;
+// --- Prioridade ---
+$prioridade-baixa: #e5e1e7;
+$on-prioridade-baixa: #494551;
+$border-prioridade-baixa: #cbc4d2;
+$prioridade-media: #e8def9;
+$on-prioridade-media: #686177;
+$border-prioridade-media: #cbc4d2;
+$prioridade-alta: #ffdad6;
+$on-prioridade-alta: #ba1a1a;
+$border-prioridade-alta: #ba1a1a33;
 
-// --- Typography (Inter) ---
-$font-family: 'Inter', sans-serif;
+// --- Status Colors ---
+$status-pending: #ffcbda; // Tertiary Container variant
+$on-status-pending: #7d5260;
+$status-in-progress: #686177; // Secondary Container
+$on-status-in-progress: #e8def9;
+$status-completed: #e0d2ff; // Primary Container
+$on-status-completed: #6750a4;
+$status-cancelled: #494551; // Surface Dim
+$on-status-cancelled: #e5e1e7;
 
 $font-size-h1: 2.5rem; // 40px
 $font-size-h2: 2rem; // 32px
