@@ -1,44 +1,58 @@
 <form [formGroup]="form">
   <div class="container-tarefas">
-    <h2>Minhas Tarefas</h2>
-    <!-- (ngSubmit)="updateStatus()" -->
-    <div formArrayName="tarefas">
-      @if (tarefas$ | async) {
+    <div class="tarefas" formArrayName="tarefas">
+      @if (!carregando) {
         @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
-          <div class="card-tarefa" [formGroupName]="i">
-            <h3>{{ control.value.titulo }}</h3>
-            <p>{{ control.value.descricao }}</p>
-
-            <div class="meta-dados">
-              <span>Prazo: {{ control.value.data }} às {{ control.value.horario }}</span
-              ><br />
-              <span>Prioridade: {{ control.value.prioridade }}</span
-              ><br />
-
-              <label [for]="'status-' + i">Status: </label>
-              <!-- O formControlName="status" se encarrega de marcar a opção vinda do banco como 'selected' -->
-              <select
-                [id]="'status-' + i"
-                formControlName="status"
-                (click)="updateStatusDaTarefa(i)"
-              >
-                @for (opcao of opcoesStatus; track opcao.chave) {
-                  <!-- Mude de opcao.chave para opcao.valor caso o banco salve o texto amigável -->
-                  <option [ngValue]="opcao.valor">
-                    {{ opcao.valor }}
-                  </option>
-                }
-              </select>
+          <div
+            class="item-tarefa"
+            [formGroupName]="i"
+            [class.concluida-item]="control.value.status === statusEnum.Concluida"
+          >
+            <div class="checkbox-area">
+              <input
+                class="task-checkbox"
+                type="checkbox"
+                [checked]="control.value.status === statusEnum.Concluida"
+              />
             </div>
 
-            <!-- <button
-            type="button"
-            class="btn-salvar-individual"
-            [disabled]="control.invalid"
-            (click)="updateStatusDaTarefa(i)"
-          >
-            Salvar Status
-          </button> -->
+            <div class="sobre-tarefa">
+              <h2>{{ control.value.titulo }}</h2>
+              <h4>{{ control.value.descricao }}</h4>
+            </div>
+
+            <app-prioridade-badge [prioridade]="control.value.prioridade"> </app-prioridade-badge>
+
+            <app-status-badge [status]="control.value.status"> </app-status-badge>
+
+            <div class="meta">
+              <img ngSrc="icons/calendar.svg" width="18" height="18" alt="Calendário" />
+
+              <span>
+                {{ control.value.data | formatarDataRelativa }},
+                {{ control.value.horario }}
+              </span>
+            </div>
+
+            <div class="acoes">
+              <!--
+              <button
+                type="button"
+                aria-label="Editar"
+                (click)="editarTarefa(i)">
+                <img
+                  ngSrc="icons/pen.svg"
+                  width="18"
+                  height="18"
+                  alt="Editar"
+                />
+              </button>
+              -->
+
+              <button type="button" aria-label="Excluir" (click)="deletarTarefa(i)">
+                <img ngSrc="icons/trash.svg" width="18" height="18" alt="Excluir" />
+              </button>
+            </div>
           </div>
         } @empty {
           <p>Nenhuma tarefa encontrada.</p>

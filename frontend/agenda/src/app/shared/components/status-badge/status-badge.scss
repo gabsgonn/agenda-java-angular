@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+.status-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  padding: 0.25rem 0.75rem;
+  border-radius: $border-radius-full;
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+}
+/* STATUS */
+.status-badge.pendente {
+  background: $on-status-pending;
+  color: $status-pending;
+}
+.status-badge.em-andamento {
+  background: $on-status-in-progress;
+  color: $status-in-progress;
+}
+.status-badge.concluida {
+  background: $on-status-completed;
+  color: $status-completed;
+}
+.status-badge.cancelado {
+  background: $on-status-cancelled;
+  color: $status-cancelled;
+}

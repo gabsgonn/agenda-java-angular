@@ -87,7 +87,6 @@
                 <span class="telefone">{{ contato.telefone }}</span>
               </div>
 
-              <!-- Um feedback visual opcional para indicar que está selecionado -->
               @if (contatosSelecionados.some((c) => c.id === contato.id)) {
                 <span class="check-icon">✓</span>
               }
