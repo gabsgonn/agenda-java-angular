@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 
 import { Tarefa } from '../../../models/tarefa-model';
@@ -9,11 +9,19 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 import { PrioridadeTarefaEnum } from '../../../shared/enums/prioridade-tarefa.enum';
 import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
 import { PrioridadeBadge } from '../../../shared/components/prioridade-badge/prioridade-badge';
+import { FormatarDataRelativaPipe } from '../../../shared/pipes/formatar-data-relativa-pipe';
 
 @Component({
   selector: 'scss-tarefa-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage, StatusBadge, PrioridadeBadge],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgOptimizedImage,
+    StatusBadge,
+    PrioridadeBadge,
+    FormatarDataRelativaPipe,
+  ],
   templateUrl: './tarefa-list.html',
   styleUrl: './tarefa-list.scss',
 })
@@ -21,6 +29,9 @@ export class TarefaList implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly tarefaService = inject(TarefaService);
   private readonly snackbarService = inject(SnackbarService);
+
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly statusEnum = StatusTarefaEnum;
   readonly prioridadeEnum = PrioridadeTarefaEnum;
@@ -35,7 +46,9 @@ export class TarefaList implements OnInit {
       tarefas: this.fb.array([]),
     });
 
-    this.carregarTarefas();
+    if (isPlatformBrowser(this.platformId)) {
+      this.carregarTarefas();
+    }
   }
 
   get tarefasFormArray(): FormArray {
@@ -49,10 +62,12 @@ export class TarefaList implements OnInit {
         const novosGrupos = dados.map((tarefa) => this.criarGrupoTarefa(tarefa));
         this.form.setControl('tarefas', this.fb.array(novosGrupos));
         this.carregando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.carregando = false;
+        this.cdr.detectChanges();
       },
     });
   }

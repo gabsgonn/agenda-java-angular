@@ -29,8 +29,7 @@
               <img ngSrc="icons/calendar.svg" width="18" height="18" alt="Calendário" />
 
               <span>
-                {{ control.value.data }}
-                às
+                {{ control.value.data | formatarDataRelativa }},
                 {{ control.value.horario }}
               </span>
             </div>

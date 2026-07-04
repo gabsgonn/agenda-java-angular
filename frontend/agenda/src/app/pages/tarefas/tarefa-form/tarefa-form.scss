@@ -21,7 +21,6 @@
   }
 }
 
-// Set Timepicker to the right
 ::ng-deep .mat-timepicker-panel {
   --mat-option-selected-state-label-text-color: black;
   max-width: 10rem !important;
@@ -29,7 +28,6 @@
   right: 0 !important;
 }
 
-// Ensure the overlay pane containing the timepicker is positioned relative to the parent
 ::ng-deep .cdk-overlay-pane:has(.mat-timepicker-panel) {
   position: relative !important;
 }
@@ -40,8 +38,12 @@
   .lista-contatos {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Espaçamento entre os contatos */
+    gap: 8px;
     margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
   }
 
   .item-contato {
@@ -60,8 +62,8 @@
     }
 
     &.selecionado {
-      background-color: #e8f0fe; /* Azul bem claro */
-      border-color: #1a73e8; /* Borda azul indicando seleção */
+      background-color: #e8f0fe;
+      border-color: #1a73e8;
 
       .nome {
         color: #1a73e8;
