@@ -1,65 +1,84 @@
-<form [formGroup]="form">
-  <div class="container-tarefas">
-    <div class="tarefas" formArrayName="tarefas">
-      @if (!carregando) {
-        @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
-          <div
-            class="item-tarefa"
-            [formGroupName]="i"
-            [class.concluida-item]="control.value.status === statusEnum.Concluida"
-          >
-            <div class="checkbox-area">
-              <input
-                class="task-checkbox"
-                type="checkbox"
-                [checked]="control.value.status === statusEnum.Concluida"
-              />
-            </div>
-
-            <div class="sobre-tarefa">
-              <h2>{{ control.value.titulo }}</h2>
-              <h4>{{ control.value.descricao }}</h4>
-            </div>
-
-            <app-prioridade-badge [prioridade]="control.value.prioridade"> </app-prioridade-badge>
-
-            <app-status-badge [status]="control.value.status"> </app-status-badge>
-
-            <div class="meta">
-              <img ngSrc="icons/calendar.svg" width="18" height="18" alt="Calendário" />
-
-              <span>
-                {{ control.value.data | formatarDataRelativa }},
-                {{ control.value.horario }}
-              </span>
-            </div>
-
-            <div class="acoes">
-              <!--
-              <button
-                type="button"
-                aria-label="Editar"
-                (click)="editarTarefa(i)">
-                <img
-                  ngSrc="icons/pen.svg"
-                  width="18"
-                  height="18"
-                  alt="Editar"
-                />
-              </button>
-              -->
-
-              <button type="button" aria-label="Excluir" (click)="deletarTarefa(i)">
-                <img ngSrc="icons/trash.svg" width="18" height="18" alt="Excluir" />
-              </button>
-            </div>
-          </div>
-        } @empty {
-          <p>Nenhuma tarefa encontrada.</p>
+<div class="container-tarefa-list">
+  <div class="header-tarefas-list">
+    <div>
+      <h1>Minhas Tarefas</h1>
+      <p>Gerencie suas atividades diárias e acompanhe o progresso.</p>
+    </div>
+    <div>
+      <mat-form-field class="example-form-field">
+        <mat-label>Buscar tarefas</mat-label>
+        <input matInput type="text" [(ngModel)]="value">
+        @if (value()) {
+          <button matSuffix matIconButton aria-label="Clear" (click)="value.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
         }
-      } @else {
-        <p>Carregando...</p>
-      }
+      </mat-form-field>
     </div>
   </div>
-</form>
+  <form [formGroup]="form">
+    <div class="container-tarefas">
+      <div class="tarefas" formArrayName="tarefas">
+        @if (!carregando) {
+          @for (control of tarefasFormArray.controls; track control.value.id; let i = $index) {
+            <div
+              class="item-tarefa"
+              [formGroupName]="i"
+              [class.concluida-item]="control.value.status === statusEnum.Concluida"
+            >
+              <div class="checkbox-area">
+                <input
+                  class="task-checkbox"
+                  type="checkbox"
+                  [checked]="control.value.status === statusEnum.Concluida"
+                />
+              </div>
+
+              <div class="sobre-tarefa">
+                <h2>{{ control.value.titulo }}</h2>
+                <h4>{{ control.value.descricao }}</h4>
+              </div>
+
+              <app-prioridade-badge [prioridade]="control.value.prioridade"> </app-prioridade-badge>
+
+              <app-status-badge [status]="control.value.status"> </app-status-badge>
+
+              <div class="meta">
+                <img ngSrc="icons/calendar.svg" width="18" height="18" alt="Calendário" />
+
+                <span>
+                  {{ control.value.data | formatarDataRelativa }},
+                  {{ control.value.horario }}
+                </span>
+              </div>
+
+              <div class="acoes">
+                <!--
+                <button
+                  type="button"
+                  aria-label="Editar"
+                  (click)="editarTarefa(i)">
+                  <img
+                    ngSrc="icons/pen.svg"
+                    width="18"
+                    height="18"
+                    alt="Editar"
+                  />
+                </button>
+                -->
+
+                <button type="button" aria-label="Excluir" (click)="deletarTarefa(i)">
+                  <img ngSrc="icons/trash.svg" width="18" height="18" alt="Excluir" />
+                </button>
+              </div>
+            </div>
+          } @empty {
+            <p>Nenhuma tarefa encontrada.</p>
+          }
+        } @else {
+          <p>Carregando...</p>
+        }
+      </div>
+    </div>
+  </form>
+</div>

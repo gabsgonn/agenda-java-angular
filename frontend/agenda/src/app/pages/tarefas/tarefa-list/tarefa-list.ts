@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,6 +11,12 @@ import { StatusBadge } from '../../../shared/components/status-badge/status-badg
 import { PrioridadeBadge } from '../../../shared/components/prioridade-badge/prioridade-badge';
 import { FormatarDataRelativaPipe } from '../../../shared/pipes/formatar-data-relativa-pipe';
 
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 @Component({
   selector: 'scss-tarefa-list',
   standalone: true,
@@ -21,6 +27,11 @@ import { FormatarDataRelativaPipe } from '../../../shared/pipes/formatar-data-re
     StatusBadge,
     PrioridadeBadge,
     FormatarDataRelativaPipe,
+    MatFormFieldModule, 
+    MatInputModule, 
+    FormsModule, 
+    MatButtonModule, 
+    MatIconModule,
   ],
   templateUrl: './tarefa-list.html',
   styleUrl: './tarefa-list.scss',
@@ -38,6 +49,7 @@ export class TarefaList implements OnInit {
 
   form!: FormGroup;
   carregando = true;
+  value = signal('Clear me');
 
   constructor() {}
 
