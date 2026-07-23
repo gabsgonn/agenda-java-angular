@@ -1,0 +1,78 @@
+<div
+  class="sidenav"
+  [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
+>
+  <!-- Logo -->
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()">
+      <img src="/logo.svg" alt="Logo">
+    </button>
+
+    @if (!isLeftSidebarCollapsed()) {
+      <div class="logo-content">
+        <h2>TaskHub</h2>
+        <span>Enterprise Suite</span>
+      </div>
+    }
+  </div>
+
+  <!-- Botão Novo -->
+  @if (!isLeftSidebarCollapsed()) {
+    <button class="new-item">
+      <img src="/icons/plus.svg">
+      <span>Novo Item</span>
+    </button>
+  }
+
+  <!-- Menu -->
+  <ul class="sidenav-nav">
+    @for (item of items; track item.routeLink) {
+      <li class="sidenav-nav-item">
+        <a
+          class="sidenav-nav-link"
+          [routerLink]="item.routeLink"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <div
+            class="sidenav-link-icon"
+            [innerHTML]="item.icon">
+          </div>
+
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text">
+              {{ item.label }}
+            </span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+
+  <!-- Rodapé -->
+  <div class="bottom-menu">
+
+    <a
+      class="sidenav-nav-link"
+      routerLink="/configuracoes"
+      routerLinkActive="active"
+    >
+      <img src="/icons/settings.svg">
+      @if (!isLeftSidebarCollapsed()) {
+        <span>Configurações</span>
+      }
+    </a>
+
+    <a
+      class="sidenav-nav-link"
+      routerLink="/logout"
+    >
+      <img src="/icons/logout.svg">
+      @if (!isLeftSidebarCollapsed()) {
+        <span>Sair</span>
+      }
+    </a>
+
+  </div>
+
+</div>

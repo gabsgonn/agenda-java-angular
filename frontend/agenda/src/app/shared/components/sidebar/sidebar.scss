@@ -1,0 +1,196 @@
+.sidenav {
+  width: 280px;
+  height: 100vh;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #f8f6fb;
+
+  padding: 20px 12px;
+
+  box-sizing: border-box;
+
+  transition: .3s;
+}
+
+.sidenav-collapsed {
+  width: 88px;
+}
+
+// Logo
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    margin-bottom:24px;
+}
+
+.logo{
+    width:40px;
+    height:40px;
+
+    flex-shrink:0;
+
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+
+    img{
+        width:100%;
+        height:100%;
+        object-fit:contain;
+        display:block;
+    }
+}
+
+.logo-content{
+    display:flex;
+    flex-direction:column;
+
+    h2{
+        margin:0;
+        font-size:18px;
+        color:#51398F;
+    }
+
+    span{
+        font-size:13px;
+        color:#666;
+    }
+}
+
+// Botão Novo
+.new-item{
+
+    width:100%;
+    height:46px;
+
+    border:none;
+    border-radius:24px;
+
+    margin-bottom:18px;
+
+    background:#51398F;
+    color:#fff;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    cursor:pointer;
+
+    img{
+        width:18px;
+        height:18px;
+    }
+}
+
+// Menu
+.sidenav-nav{
+
+    list-style:none;
+    margin:0;
+    padding:0;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+
+    flex:1;
+}
+
+// Links
+.sidenav-nav-link {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  border-radius: 24px;
+  color: #686177;
+  text-decoration: none;
+  transition: all .2s;
+
+  span {
+    white-space: nowrap;
+  }
+
+  .sidenav-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ::ng-deep .sidenav-link-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    background: #ece7fb;
+  }
+
+  &.active {
+    background: #ddd3f7;
+    color: #51398f; // o SVG muda automaticamente
+  }
+}
+
+// Ativo
+.active{
+    background:#ddd3f7;
+    color:#51398F;
+    font-weight:600;
+    svg {
+        fill: white;
+        // fill: #686177;
+    }
+}
+
+// Rodapé
+.bottom-menu{
+
+    margin-top:auto;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:6px;
+}
+
+// Sidebar fechada
+.sidenav-collapsed{
+
+    width:82px;
+
+    .logo-content,
+    .sidenav-link-text{
+        display:none;
+    }
+
+    .sidenav-nav-link,
+    .bottom-menu .sidenav-nav-link{
+        justify-content:center;
+        padding:0;
+    }
+
+    .new-item{
+        width:52px;
+        height:52px;
+        margin:auto;
+        border-radius:50%;
+
+        span{
+            display:none;
+        }
+    }
+}
