@@ -1,2 +1,2 @@
-export * from './tarefas-list.icon';
-export * from './contatos-list.icon';
+export * from './raw-icons';
+export * from './icon.factory';
