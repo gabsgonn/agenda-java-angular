@@ -2,8 +2,6 @@ import { Component, HostListener, OnInit, PLATFORM_ID, inject, signal } from '@a
 import { isPlatformBrowser } from '@angular/common';
 import { Sidebar } from "./shared/components/sidebar/sidebar";
 import { Main } from "./shared/components/main/main";
-import { DomSanitizer } from '@angular/platform-browser';
-import { Icons } from './shared/icons';
 
 @Component({
   selector: 'scss-root',
@@ -12,10 +10,6 @@ import { Icons } from './shared/icons';
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
-  constructor(private sanitizer: DomSanitizer) {
-    Icons.init(this.sanitizer);
-  }
-
   protected readonly title = signal('agenda');
 
   isLeftSidebarCollapsed = signal<boolean>(false);
