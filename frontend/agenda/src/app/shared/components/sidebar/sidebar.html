@@ -5,13 +5,13 @@
   <!-- Logo -->
   <div class="logo-container">
     <button class="logo" (click)="toggleCollapse()">
-      <img src="/logo.svg" alt="Logo">
+      <img src="/logo.webp" alt="Logo">
     </button>
 
     @if (!isLeftSidebarCollapsed()) {
       <div class="logo-content">
         <h2>TaskHub</h2>
-        <span>Enterprise Suite</span>
+        <span>Organização pessoal</span>
       </div>
     }
   </div>
@@ -49,30 +49,29 @@
     }
   </ul>
 
+
   <!-- Rodapé -->
-  <div class="bottom-menu">
+  <ul class="bottom-menu sidenav-nav-bottom">
+    @for (item of itemsBottom; track item.routeLink) {
+      <li class="sidenav-nav-item">
+        <a
+          class="sidenav-nav-link"
+          [routerLink]="item.routeLink"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <div
+            class="sidenav-link-icon"
+            [innerHTML]="item.icon">
+          </div>
 
-    <a
-      class="sidenav-nav-link"
-      routerLink="/configuracoes"
-      routerLinkActive="active"
-    >
-      <img src="/icons/settings.svg">
-      @if (!isLeftSidebarCollapsed()) {
-        <span>Configurações</span>
-      }
-    </a>
-
-    <a
-      class="sidenav-nav-link"
-      routerLink="/logout"
-    >
-      <img src="/icons/logout.svg">
-      @if (!isLeftSidebarCollapsed()) {
-        <span>Sair</span>
-      }
-    </a>
-
-  </div>
-
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text">
+              {{ item.label }}
+            </span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
 </div>

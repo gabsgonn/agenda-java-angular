@@ -20,6 +20,11 @@ export class Sidebar {
     icon: SafeHtml;
     label: string;
   }[];
+  itemsBottom!: {
+    routeLink: string;
+    icon: SafeHtml;
+    label: string;
+  }[];
 
   constructor(private sanitizer: DomSanitizer) {
     this.icons = IconFactory.create(this.sanitizer, RawIcons);
@@ -36,6 +41,19 @@ export class Sidebar {
         label: 'Meus Contatos',
       },
     ];
+
+    this.itemsBottom = [
+      {
+        routeLink: '/configuracoes',
+        icon: this.icons.configuracoes,
+        label: 'Configurações',
+      },
+      {
+        routeLink: '/logout',
+        icon: this.icons.logout,
+        label: 'Sair',
+      }
+    ]
   }
 
   toggleCollapse(): void {
