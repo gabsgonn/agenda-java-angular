@@ -16,6 +16,12 @@
   box-sizing: border-box;
 
   transition: .3s;
+
+  overflow: hidden;
+
+  * {
+    transition: opacity .2s;
+  }
 }
 
 .sidenav-collapsed {
@@ -27,6 +33,8 @@
     display:flex;
     align-items:center;
     gap:14px;
+
+    height: 50px;
 
     margin-bottom:24px;
 }
@@ -86,11 +94,6 @@
     gap:10px;
 
     cursor:pointer;
-
-    img{
-        width:18px;
-        height:18px;
-    }
 }
 
 // Menu
@@ -107,6 +110,8 @@
 
     flex:1;
 }
+
+// Rodapé
 .sidenav-nav-bottom{
 
     list-style:none;
@@ -125,35 +130,29 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 0 14px;
+  padding: 0 14px;           // fixo, não muda mais no collapsed
   border-radius: 24px;
   color: #686177;
   text-decoration: none;
-  transition: all .2s;
-
-  span {
-    white-space: nowrap;
-  }
+  overflow: hidden;
+  transition: background .2s;
 
   .sidenav-link-icon {
+    flex: 0 0 22px;           // largura fixa — o ícone nunca se move
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  ::ng-deep .sidenav-link-icon svg {
-    width: 22px;
-    height: 22px;
+  .sidenav-link-text {
+    white-space: nowrap;
+    opacity: 1;
+    max-width: 200px;
+    transition: opacity .2s ease, max-width .3s ease, margin-left .3s ease;
   }
 
-  &:hover {
-    background: #ece7fb;
-  }
-
-  &.active {
-    background: #ddd3f7;
-    color: #51398f; // o SVG muda automaticamente
-  }
+  &:hover { background: #ece7fb; }
+  &.active { background: #ddd3f7; color: #51398f; }
 }
 
 // Ativo
@@ -165,17 +164,6 @@
         fill: white;
         // fill: #686177;
     }
-}
-
-// Rodapé
-.bottom-menu{
-
-    margin-top:auto;
-
-    display:flex;
-    flex-direction:column;
-
-    gap:6px;
 }
 
 // Sidebar fechada
@@ -204,4 +192,40 @@
             display:none;
         }
     }
+}
+
+.sidenav-collapsed {
+  .sidenav-nav-link {
+    justify-content: flex-start; // continua flex-start, não centraliza mais
+    padding: 0 14px;             // mesmo padding — o container é que fica estreito
+
+    .sidenav-link-text {
+      opacity: 0;
+      max-width: 0;
+      margin-left: -14px;        // compensa o "gap" pra não sobrar espaço vazio
+    }
+  }
+}
+
+.logo-content h2,
+.logo-content span,
+.new-item span,
+.sidenav-link-text {
+  white-space: nowrap;
+}
+
+// Animação ao abrir/fechar
+.logo-content,
+.sidenav-link-text {
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.sidenav-collapsed {
+  .logo-content,
+  .sidenav-link-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+  }
 }

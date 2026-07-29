@@ -17,12 +17,17 @@
   </div>
 
   <!-- Botão Novo -->
-  @if (!isLeftSidebarCollapsed()) {
-    <button class="new-item">
-      <img src="/icons/plus.svg">
-      <span>Novo Item</span>
-    </button>
-  }
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item">
+      <button class="new-item sidenav-nav-item">
+        <div 
+          class="sidenav-link-icon"
+          [innerHTML]="icons.plus">
+        </div>
+        <span>Novo Item</span>
+      </button>
+    </li>
+  </ul>
 
   <!-- Menu -->
   <ul class="sidenav-nav">
@@ -39,19 +44,16 @@
             [innerHTML]="item.icon">
           </div>
 
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text">
-              {{ item.label }}
-            </span>
-          }
+          <span class="sidenav-link-text">
+            {{ item.label }}
+          </span>
         </a>
       </li>
     }
   </ul>
 
-
   <!-- Rodapé -->
-  <ul class="bottom-menu sidenav-nav-bottom">
+  <ul class="sidenav-nav-bottom">
     @for (item of itemsBottom; track item.routeLink) {
       <li class="sidenav-nav-item">
         <a
@@ -65,11 +67,9 @@
             [innerHTML]="item.icon">
           </div>
 
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text">
-              {{ item.label }}
-            </span>
-          }
+          <span class="sidenav-link-text">
+            {{ item.label }}
+          </span>
         </a>
       </li>
     }
