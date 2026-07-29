@@ -267,6 +267,8 @@
 
     font-weight:600;
 
+    border-left: 3.33px solid #51398F;
+
     box-shadow:
         inset 0 0 0 1px rgba(81,57,143,.05);
 
@@ -282,22 +284,22 @@
         }
     }
 }
-.active::before{
+// .active::before{
 
-    content:"";
+//     content:"";
 
-    position:absolute;
+//     position:absolute;
 
-    left:8px;
-    top:10px;
+//     left:8px;
+//     top:10px;
 
-    width:4px;
-    height:28px;
+//     width:4px;
+//     height:28px;
 
-    border-radius:20px;
+//     border-radius:20px;
 
-    background:#51398F;
-}
+//     background:#51398F;
+// }
 
 // Sidebar fechada
 .sidenav-collapsed{
