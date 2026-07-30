@@ -68,7 +68,11 @@
                 -->
 
                 <button type="button" aria-label="Excluir" (click)="deletarTarefa(i)">
-                  <img ngSrc="icons/trash.svg" width="18" height="18" alt="Excluir" />
+                  <!-- <img ngSrc="icons/trash.svg" width="18" height="18" alt="Excluir" /> -->
+                  <div
+                  class="sidenav-link-icon"
+                  [innerHTML]="icons.lixo">
+                  </div>
                 </button>
               </div>
             </div>

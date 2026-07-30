@@ -10,12 +10,14 @@ import { PrioridadeTarefaEnum } from '../../../shared/enums/prioridade-tarefa.en
 import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
 import { PrioridadeBadge } from '../../../shared/components/prioridade-badge/prioridade-badge';
 import { FormatarDataRelativaPipe } from '../../../shared/pipes/formatar-data-relativa-pipe';
+import { IconFactory, RawIcons } from '../../../shared/icons';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'scss-tarefa-list',
@@ -50,8 +52,13 @@ export class TarefaList implements OnInit {
   form!: FormGroup;
   carregando = true;
   value = signal('Clear me');
+  icons: ReturnType<typeof IconFactory.create<typeof RawIcons>>;
 
-  constructor() {}
+  constructor(
+    private sanitizer: DomSanitizer
+  ) {
+    this.icons = IconFactory.create(this.sanitizer, RawIcons);
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
