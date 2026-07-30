@@ -5,7 +5,15 @@
   <!-- Logo -->
   <div class="logo-container">
     <button class="logo" (click)="toggleCollapse()">
-      <img src="/logo.webp" alt="Logo">
+      <img 
+        [style]="
+          isLeftSidebarCollapsed() ? 
+          'transition: ease .3s all;' : 
+          'transform: rotate(90deg); transition: ease .35s all;'
+        "
+        src="/logo.webp" 
+        alt="Logo"
+      >
     </button>
 
     @if (!isLeftSidebarCollapsed()) {
