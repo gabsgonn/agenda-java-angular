@@ -1,1 +1,209 @@
-<p>contato-list works!</p>
+<div class="contacts-page">
+
+  <!-- Header -->
+  <header class="page-header">
+
+    <div class="page-title">
+      <h1>Gestão de Contatos</h1>
+      <p>Gerencie clientes, fornecedores e parceiros estratégicos.</p>
+    </div>
+
+    <div class="page-actions">
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="import-button">
+
+        <mat-icon>upload_file</mat-icon>
+        Importar Lote
+
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="new-button">
+
+        <mat-icon>person_add</mat-icon>
+        Novo Contato
+
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- Barra de Pesquisa -->
+  <section class="toolbar">
+
+    <mat-form-field
+      appearance="outline"
+      class="search-field">
+
+      <mat-icon matPrefix>search</mat-icon>
+
+      <input
+        matInput
+        placeholder="Buscar por nome, email ou empresa..."
+        [(ngModel)]="search">
+
+    </mat-form-field>
+
+    <div class="toolbar-right">
+
+      <mat-chip-listbox>
+
+        <mat-chip-option
+          [selected]="selectedFilter === 'todos'">
+          Todos
+        </mat-chip-option>
+<!-- 
+        <mat-chip-option
+          [selected]="selectedFilter === 'clientes'">
+          Clientes
+        </mat-chip-option>
+
+        <mat-chip-option
+          [selected]="selectedFilter === 'fornecedores'">
+          Fornecedores
+        </mat-chip-option> -->
+
+      </mat-chip-listbox>
+
+      <button
+        mat-icon-button>
+
+        <mat-icon>tune</mat-icon>
+
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- Conteúdo -->
+  <section class="contacts-grid">
+
+    <!-- Novo contato -->
+
+    <article class="add-card">
+
+      <button mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <h3>Adicionar Novo</h3>
+
+      <p>
+        Cadastre um novo
+        contato manualmente.
+      </p>
+
+    </article>
+
+    <!-- Cards -->
+
+    <!-- @for(contato of contatos; track contato.id){
+
+      <mat-card class="contact-card">
+
+        <mat-card-content>
+
+          <div class="card-header">
+
+            <div class="avatar">
+
+              @if(contato.foto){
+
+                <img
+                  [src]="contato.foto"
+                  [alt]="contato.nome">
+
+              } @else {
+
+                <span>
+                  {{ contato.nome.charAt(0) }}
+                </span>
+
+              }
+
+            </div>
+
+            <div class="header-info">
+
+              <h3>
+                {{ contato.nome }}
+              </h3>
+
+              <span class="cargo">
+                {{ contato.cargo }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="card-info">
+
+            <div class="info-row">
+
+              <mat-icon>business</mat-icon>
+
+              <span>
+                {{ contato.empresa }}
+              </span>
+
+            </div>
+
+            <div class="info-row">
+
+              <mat-icon>mail_outline</mat-icon>
+
+              <span>
+                {{ contato.email }}
+              </span>
+
+            </div>
+
+            <div class="info-row">
+
+              <mat-icon>call</mat-icon>
+
+              <span>
+                {{ contato.telefone }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="card-footer">
+
+            <span
+              class="badge"
+              [ngClass]="contato.tipo">
+
+              {{ contato.tipo }}
+
+            </span>
+
+            <button
+              mat-button
+              color="primary">
+
+              Ver Perfil
+
+            </button>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    } -->
+
+  </section>
+
+</div>
